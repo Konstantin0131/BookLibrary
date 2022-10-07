@@ -8,19 +8,14 @@ namespace Library
 {
     class Person
     {
-        public string firstName { get; set; }
-        public string sekondName { get; set; }
+        public string FirstName { get; set; }
 
+        public string SecondName { get; set; }
 
-
-        public Person(string _firstName, string _sekondName)
+        public Person(string firstName, string sekondName)
         {
-
-            firstName = _firstName;
-             sekondName = _sekondName;
-
+            FirstName = firstName;
+            SecondName = sekondName;
         }
-
-
     }
 }

@@ -8,96 +8,130 @@ namespace Library
 {
     class Library
     {
-        public List<Book> books;
-        public List<Author> authors;
+        private List<Book> books;
 
         public Library()
         {
             books = new List<Book>();
             FillBooks();
-            authors = new List<Author>();
-          
         }
 
         public void AddBook()
         {
-            Console.WriteLine( "Введите название книги, а затем автора : ");
-            string namebook = Console.ReadLine();
-            string firstName = Console.ReadLine();
-            string sekondName = Console.ReadLine();
+            string namebook = null;
+            string firstName = null;
+            string secondName = null;
 
-            books.Add(new Book(namebook, new Author(firstName, sekondName)));
+            while (string.IsNullOrEmpty(namebook))
+            {
+                Console.WriteLine("Введите название книги : ");
+                namebook = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(namebook))
+                {
+                    Console.WriteLine(" Вы ничего не ввели  ");
+                }
+            }
+
+            while (string.IsNullOrEmpty(firstName))
+            {
+                Console.WriteLine("Введите имя автора : ");
+                firstName = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(firstName))
+                {
+                    Console.WriteLine(" Вы ничего не ввели  ");
+                }
+
+            }
+
+            while (string.IsNullOrEmpty(secondName))
+            {
+                Console.WriteLine("Введите фамилию автора : ");
+                secondName = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(secondName))
+                {
+                    Console.WriteLine(" Вы ничего не ввели  ");
+                }
+            }
+
+            foreach (var bookName in books)
+            {
+                if (bookName.NameBook == namebook)
+                {
+                    Console.WriteLine("В библиртеке уже есть такая книга ");
+                    return;
+                }
+            }
+
+            books.Add(new Book(namebook, new Author(firstName, secondName)));
         }
 
         public void RemoveBook()
         {
             Console.WriteLine("Какую книгу вы хотите удалить : ");
-            string a = Console.ReadLine();
-            foreach (var name in books)
+            string bookName = Console.ReadLine();
+
+            foreach (var currentBook in books)
             {
-                if (name.NameBook.ToLower().Equals(a.ToLower()))
+                if (currentBook.NameBook.ToLower().Equals(bookName.ToLower()))
                 {
-                    books.Remove(name);
+                    books.Remove(currentBook);
                     return;
                 }
             }
-           
-            {
-                Console.WriteLine("В Библиотеке нет такой книги");
-            }
 
-        }
-        public void AlphabeticalContentByAuthorFirstName()
-        {
-            var sorteBookAuthor = books.OrderBy(p => p.AuthorBook.firstName);
-            foreach(var p in sorteBookAuthor)
-            {
-                Console.WriteLine( p.AuthorBook.firstName +"  " + p.AuthorBook.sekondName +" : "+p.NameBook);
-            }
-
-
+            Console.WriteLine("В Библиотеке нет такой книги");
         }
 
-        public void AlphabeticalContentByAuthorSekondName()
+        public void AlphabeticalContentByAuthorName()
         {
-            var sorteBookAuthor = books.OrderBy(p => p.AuthorBook.sekondName);
-            foreach (var p in sorteBookAuthor)
+            var sortedBooks = books.OrderBy(p => p.AuthorBook.FirstName);
+            foreach (var book in sortedBooks)
             {
-                Console.WriteLine(p.AuthorBook.sekondName + "-" + p.AuthorBook.firstName+" : "+p.NameBook);
+                Console.WriteLine(book.AuthorBook.FirstName + "  " + book.AuthorBook.SecondName + " : " + book.NameBook);
             }
+        }
 
+        public void AlphabeticalContentByAuthorSurname()
+        {
+            var sorteBookAuthor = books.OrderBy(p => p.AuthorBook.SecondName);
 
+            foreach (var book in sorteBookAuthor)
+            {
+                Console.WriteLine(book.AuthorBook.SecondName + "-" + book.AuthorBook.FirstName + " : " + book.NameBook);
+            }
         }
 
         public void AlphabeticalContentByTitle()
         {
-            var sorteBookAuthor = books.OrderBy(b => b.NameBook);
-            foreach (var b in sorteBookAuthor)
+            var sorteBooks = books.OrderBy(b => b.NameBook);
+
+            foreach (var book in sorteBooks)
             {
-                Console.WriteLine(b.NameBook + " : "+ b.AuthorBook.firstName +" " + b.AuthorBook.sekondName);
+                Console.WriteLine(book.NameBook + " : " + book.AuthorBook.FirstName + " " + book.AuthorBook.SecondName);
             }
-
-
         }
+
         public void AuthorBookList()
         {
             Console.WriteLine("Введите автора :  ");
-            string _authorlist = Console.ReadLine();
-            string a = null;
-            foreach (var authorlist in books)
+            string Authorlist = Console.ReadLine();
+
+            string compar = null;
+
+            foreach (var currentBook in books)
             {
-
-                if (authorlist.AuthorBook.sekondName == _authorlist)
+                if (currentBook.AuthorBook.SecondName == Authorlist)
                 {
-                    Console.WriteLine( authorlist.NameBook);
+                    Console.WriteLine(currentBook.NameBook);
 
-                    a = authorlist.AuthorBook.sekondName;
+                    compar = currentBook.AuthorBook.SecondName;
                 }
-
-
-
             }
-            if (a == null)
+
+            if (compar == null)
             {
                 Console.WriteLine("В Библиотеке нет такого автора");
             }
@@ -107,37 +141,28 @@ namespace Library
         {
             Console.WriteLine("Введите слово : ");
             string element = Console.ReadLine();
-            
-            foreach (var elementName in books)
+
+            foreach (var currentBook in books)
             {
-                if (elementName.NameBook.ToLower().Contains(element.ToLower()))
+                if (currentBook.NameBook.ToLower().Contains(element.ToLower()))
                 {
-                    Console.WriteLine(elementName.NameBook+" : "+elementName.AuthorBook.firstName+" " + elementName.AuthorBook.sekondName);
+                    Console.WriteLine(currentBook.NameBook + " : " + currentBook.AuthorBook.FirstName + " " + currentBook.AuthorBook.SecondName);
                     return;
                 }
-
             }
+
             Console.WriteLine("Нет такой книги в библиотеке ");
-
-
         }
 
-       
         public void FillBooks()
         {
-            books.Add(new Book("Vyi",  new Author("Anton", "Chehov")));
+            books.Add(new Book("Vyi", new Author("Anton", "Chehov")));
             books.Add(new Book("Idiot", new Author("Fedor", "Dostoevski")));
             books.Add(new Book("Igrok", new Author("Fedor", "Dostoevski")));
             books.Add(new Book("Hobit", new Author("Albert", "Tolkin")));
             books.Add(new Book("Prislyga", new Author("Alex", "Stoket")));
             books.Add(new Book("Noch", new Author("Max", "Vizel")));
             books.Add(new Book("Kameniari", new Author("Ivan", "Franko")));
-
-
         }
-
-     
-
-
     }
 }

@@ -9,17 +9,13 @@ namespace Library
     class Book
     {
         public Author AuthorBook { get; set; }
+
         public string NameBook { get; set; }
 
-        public Book(string nameBook, Author authorBook )
+        public Book(string nameBook, Author authorBook)
         {
             AuthorBook = authorBook;
             NameBook = nameBook;
-            
         }
-
-
-       
-
     }
 }
