@@ -18,6 +18,7 @@ namespace Library
 
         public void AddBook()
         {
+            Grades grade=Grades.historical ;
             string namebook = null;
             string firstName = null;
             string secondName = null;
@@ -65,14 +66,36 @@ namespace Library
                 }
             }
 
-            books.Add(new Book(namebook, new Author(firstName, secondName)));
+            Console.WriteLine("Выберите жанр : " );
+            Console.WriteLine("Исторический клавиша 1 ");
+            Console.WriteLine("Художественный клавиша 2 ");
+            Console.WriteLine("Детектив клавиша 3 ");
+            Console.WriteLine("Детская литература клавиша 4 ");
+            int a = int.Parse(Console.ReadLine());
+            switch (a)
+            {
+                case 1:
+
+                    grade = Grades.historical;
+                    break;
+                case 2:
+                    grade = Grades.fiction;
+                    break;
+                case 3:
+                    grade = Grades.detective;
+                    break;
+                case 4:
+                    grade = Grades.childrens;
+                    break;
+            }
+                    books.Add(new Book(namebook, new Author(firstName, secondName),grade )) ;
         }
 
         public void RemoveBook()
         {
             Console.WriteLine("Какую книгу вы хотите удалить : ");
             string bookName = Console.ReadLine();
-
+            
             foreach (var currentBook in books)
             {
                 if (currentBook.NameBook.ToLower().Equals(bookName.ToLower()))
@@ -90,7 +113,7 @@ namespace Library
             var sortedBooks = books.OrderBy(p => p.AuthorBook.FirstName);
             foreach (var book in sortedBooks)
             {
-                Console.WriteLine(book.AuthorBook.FirstName + "  " + book.AuthorBook.SecondName + " : " + book.NameBook);
+                Console.WriteLine(book.AuthorBook.FirstName + "  " + book.AuthorBook.SecondName + " : " + book.NameBook+" ("+book.Grade+")");
             }
         }
 
@@ -154,15 +177,66 @@ namespace Library
             Console.WriteLine("Нет такой книги в библиотеке ");
         }
 
-        public void FillBooks()
+        public void GenreSelection()
+        {         
+            Console.WriteLine("Выберите жанр : ");
+            Console.WriteLine("Исторический клавиша 1 ");
+            Console.WriteLine("Художественный клавиша 2 ");
+            Console.WriteLine("Детектив клавиша 3 ");
+            Console.WriteLine("Детская литература клавиша 4 ");
+            int a = int.Parse(Console.ReadLine());            
+            switch (a)
+            {
+                case 1:
+                    foreach(var grades in books)
+                    {
+                        if (grades.Grade == Grades.historical)
+                        {
+                            Console.WriteLine(grades.NameBook+" : "+grades.AuthorBook.SecondName+" "+grades.AuthorBook.FirstName);
+                        }
+                    }                   
+                    break;
+                case 2:
+                    foreach (var grades in books)
+                    {
+                        if (grades.Grade == Grades.fiction)
+                        {
+                            Console.WriteLine(grades.NameBook + " : " + grades.AuthorBook.SecondName + " " + grades.AuthorBook.FirstName);
+                        }
+                    }
+                    break;
+                case 3:
+                    foreach (var grades in books)
+                    {
+                        if (grades.Grade == Grades.detective)
+                        {
+                            Console.WriteLine(grades.NameBook + " : " + grades.AuthorBook.SecondName + " " + grades.AuthorBook.FirstName);
+                        }
+                    }
+                    break;
+                case 4:
+                    foreach (var grades in books)
+                    {
+                        if (grades.Grade == Grades.childrens)
+                        {
+                            Console.WriteLine(grades.NameBook + " : " + grades.AuthorBook.SecondName + " " + grades.AuthorBook.FirstName);
+                        }
+                    }
+                    break;
+
+            }
+
+        }
+
+            public void FillBooks()
         {
-            books.Add(new Book("Vyi", new Author("Anton", "Chehov")));
-            books.Add(new Book("Idiot", new Author("Fedor", "Dostoevski")));
-            books.Add(new Book("Igrok", new Author("Fedor", "Dostoevski")));
-            books.Add(new Book("Hobit", new Author("Albert", "Tolkin")));
-            books.Add(new Book("Prislyga", new Author("Alex", "Stoket")));
-            books.Add(new Book("Noch", new Author("Max", "Vizel")));
-            books.Add(new Book("Kameniari", new Author("Ivan", "Franko")));
+            books.Add(new Book("Vyi", new Author("Anton", "Chehov"),Grades.fiction));
+            books.Add(new Book("Idiot", new Author("Fedor", "Dostoevski"),Grades.fiction));
+            books.Add(new Book("Igrok", new Author("Fedor", "Dostoevski"),Grades.detective));
+            books.Add(new Book("Hobit", new Author("Albert", "Tolkin"),Grades.childrens));
+            books.Add(new Book("Prislyga", new Author("Alex", "Stoket"), Grades.childrens));
+            books.Add(new Book("Noch", new Author("Max", "Vizel"), Grades.detective));
+            books.Add(new Book("Kameniari", new Author("Ivan", "Franko"),Grades.historical));
         }
     }
 }
