@@ -23,6 +23,7 @@ namespace Library
                 Console.WriteLine("Содержимое по алфавиту(по названию)- клавиша 5");
                 Console.WriteLine("Список книг автора- клавиша 6");
                 Console.WriteLine("Найти книгу по ключевым словам- клавиша 7");
+                Console.WriteLine("Выбор жанра клавиша 8");
                 Console.WriteLine("Выберите действие : ");
                 int a = int.Parse(Console.ReadLine());
                 switch (a)
@@ -51,6 +52,10 @@ namespace Library
                     case 7:
                         library.SearchByKeyword();
                         break;
+                    case 8:
+                        library.PrintBooksByGenre();
+                        break;
+                  
                 }
 
             }
