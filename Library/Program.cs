@@ -53,8 +53,9 @@ namespace Library
                         library.SearchByKeyword();
                         break;
                     case 8:
-                        library.GenreSelection();
+                        library.PrintBooksByGenre();
                         break;
+                  
                 }
 
             }

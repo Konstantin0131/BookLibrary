@@ -18,7 +18,7 @@ namespace Library
 
         public void AddBook()
         {
-            Grades grade=Grades.historical ;
+            Genres grade = Genres.Unknown;
             string namebook = null;
             string firstName = null;
             string secondName = null;
@@ -71,21 +71,20 @@ namespace Library
             Console.WriteLine("Художественный клавиша 2 ");
             Console.WriteLine("Детектив клавиша 3 ");
             Console.WriteLine("Детская литература клавиша 4 ");
-            int a = int.Parse(Console.ReadLine());
-            switch (a)
+            int genre = int.Parse(Console.ReadLine());
+            switch (genre)
             {
                 case 1:
-
-                    grade = Grades.historical;
+                    grade = Genres.Historical;
                     break;
                 case 2:
-                    grade = Grades.fiction;
+                    grade = Genres.Fiction;
                     break;
                 case 3:
-                    grade = Grades.detective;
+                    grade = Genres.Detective;
                     break;
                 case 4:
-                    grade = Grades.childrens;
+                    grade = Genres.Childrens;
                     break;
             }
                     books.Add(new Book(namebook, new Author(firstName, secondName),grade )) ;
@@ -104,7 +103,6 @@ namespace Library
                     return;
                 }
             }
-
             Console.WriteLine("В Библиотеке нет такой книги");
         }
 
@@ -113,7 +111,7 @@ namespace Library
             var sortedBooks = books.OrderBy(p => p.AuthorBook.FirstName);
             foreach (var book in sortedBooks)
             {
-                Console.WriteLine(book.AuthorBook.FirstName + "  " + book.AuthorBook.SecondName + " : " + book.NameBook+" ("+book.Grade+")");
+                Console.WriteLine(book.AuthorBook.FirstName + "  " + book.AuthorBook.SecondName + " : " + book.NameBook+" ("+book.Gentres + ")");
             }
         }
 
@@ -177,20 +175,20 @@ namespace Library
             Console.WriteLine("Нет такой книги в библиотеке ");
         }
 
-        public void GenreSelection()
+        public void PrintBooksByGenre()
         {         
             Console.WriteLine("Выберите жанр : ");
             Console.WriteLine("Исторический клавиша 1 ");
             Console.WriteLine("Художественный клавиша 2 ");
             Console.WriteLine("Детектив клавиша 3 ");
             Console.WriteLine("Детская литература клавиша 4 ");
-            int a = int.Parse(Console.ReadLine());            
-            switch (a)
+            int genre = int.Parse(Console.ReadLine());            
+            switch (genre)
             {
                 case 1:
                     foreach(var grades in books)
                     {
-                        if (grades.Grade == Grades.historical)
+                        if (grades.Gentres == Genres.Historical)
                         {
                             Console.WriteLine(grades.NameBook+" : "+grades.AuthorBook.SecondName+" "+grades.AuthorBook.FirstName);
                         }
@@ -199,7 +197,7 @@ namespace Library
                 case 2:
                     foreach (var grades in books)
                     {
-                        if (grades.Grade == Grades.fiction)
+                        if (grades.Gentres == Genres.Fiction)
                         {
                             Console.WriteLine(grades.NameBook + " : " + grades.AuthorBook.SecondName + " " + grades.AuthorBook.FirstName);
                         }
@@ -208,7 +206,7 @@ namespace Library
                 case 3:
                     foreach (var grades in books)
                     {
-                        if (grades.Grade == Grades.detective)
+                        if (grades.Gentres == Genres.Detective)
                         {
                             Console.WriteLine(grades.NameBook + " : " + grades.AuthorBook.SecondName + " " + grades.AuthorBook.FirstName);
                         }
@@ -217,26 +215,28 @@ namespace Library
                 case 4:
                     foreach (var grades in books)
                     {
-                        if (grades.Grade == Grades.childrens)
+                        if (grades.Gentres == Genres.Childrens)
                         {
                             Console.WriteLine(grades.NameBook + " : " + grades.AuthorBook.SecondName + " " + grades.AuthorBook.FirstName);
                         }
                     }
                     break;
-
+                default:
+                    Console.WriteLine("Вы ввели недопустимое значение");
+                    break;
             }
 
         }
 
             public void FillBooks()
         {
-            books.Add(new Book("Vyi", new Author("Anton", "Chehov"),Grades.fiction));
-            books.Add(new Book("Idiot", new Author("Fedor", "Dostoevski"),Grades.fiction));
-            books.Add(new Book("Igrok", new Author("Fedor", "Dostoevski"),Grades.detective));
-            books.Add(new Book("Hobit", new Author("Albert", "Tolkin"),Grades.childrens));
-            books.Add(new Book("Prislyga", new Author("Alex", "Stoket"), Grades.childrens));
-            books.Add(new Book("Noch", new Author("Max", "Vizel"), Grades.detective));
-            books.Add(new Book("Kameniari", new Author("Ivan", "Franko"),Grades.historical));
+            books.Add(new Book("Vyi", new Author("Anton", "Chehov"), Genres.Fiction));
+            books.Add(new Book("Idiot", new Author("Fedor", "Dostoevski"), Genres.Fiction));
+            books.Add(new Book("Igrok", new Author("Fedor", "Dostoevski"), Genres.Detective));
+            books.Add(new Book("Hobit", new Author("Albert", "Tolkin"), Genres.Childrens));
+            books.Add(new Book("Prislyga", new Author("Alex", "Stoket"), Genres.Childrens));
+            books.Add(new Book("Noch", new Author("Max", "Vizel"), Genres.Detective));
+            books.Add(new Book("Kameniari", new Author("Ivan", "Franko"), Genres.Historical));
         }
     }
 }
